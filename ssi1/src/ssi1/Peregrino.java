@@ -61,7 +61,7 @@ public class Peregrino {
         
         toret.anadirBloque("datos", datosCifrados);
         toret.anadirBloque("claveCifrada", claveCifrada);
-        toret.anadirBloque("resumen", resumenDatos);
+        toret.anadirBloque("resumenPeregrino", resumenDatos);       //comprobar llamadas--------------------------------
         
         return toret;
             

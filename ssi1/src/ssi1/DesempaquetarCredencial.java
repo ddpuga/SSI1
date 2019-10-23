@@ -50,11 +50,23 @@ public class DesempaquetarCredencial {
         byte[] claveSecretaArray = ofi.descifrarDatosRSAPrivada(privadaOficina, bloqueKS);
 
         DESKeySpec DESspec = new DESKeySpec(claveSecretaArray);
-        SecretKey claveSecreta = secretKeyFactoryDES.generateSecret(DESspec);
-
-        ofi.descifrarDatosSimetrico(claveSecreta, bloqueKS);
+        //Obtenemos la clave secreta
+        SecretKey claveSecreta = secretKeyFactoryDES.generateSecret(DESspec);   //Desencriptamos el bloque con la clave secreta cifrada
         
-        //desencriptar datos (simetrico) con clave secreta
+        //Desciframos los datos con la clave secreta DES
+        byte[]datosDesencriptados = ofi.descifrarDatosSimetrico(claveSecreta, bloqueKS);
+        //Resumimos los datos recibidos
+        byte[]resumenGenerado = ofi.resumirDatos(datosDesencriptados);
+        
+        byte[] bloqueResumenEncriptado = p.getContenidoBloque("resumenPeregrino");
+        byte[] resumenRecibido = ofi.descifrarDatosRSAPublica(publicaPeregrino, bloqueResumenEncriptado);
+        
+        //Comparamos los resumenes
+        if(ofi.compararResumenes(resumenGenerado, resumenRecibido)){
+            System.out.println("RESUMENES COINCIDENTES, DATOS EN BUEN ESTADO");
+        }else{
+            System.out.println("DATOS COMPROMETIDOS :(");
+        }
 
     }
 
