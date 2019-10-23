@@ -10,11 +10,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Scanner;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  *
@@ -23,7 +25,9 @@ import javax.crypto.NoSuchPaddingException;
 public class SellarCredencial {
 
     public static void main(String[] args) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException, IOException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-
+        //REGISTRAMOS EL PROVIDER
+        Security.addProvider(new BouncyCastleProvider()); 
+        
         args = new String[]{"paquete.txt", "oficina.publica", "albergue.privada"};
         Scanner teclado = new Scanner(System.in);
         Utils u = new Utils();

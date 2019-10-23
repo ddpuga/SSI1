@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Scanner;
 import javax.crypto.BadPaddingException;
@@ -19,6 +20,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  *
@@ -27,7 +29,9 @@ import javax.crypto.spec.DESKeySpec;
 public class DesempaquetarCredencial {
 
     public static void main(String[] args) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException, IOException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-
+        //REGISTRAMOS EL PROVIDER
+        Security.addProvider(new BouncyCastleProvider()); 
+         
         args = new String[]{"paquete.txt", "oficina.publica", "oficina.privada", "peregrino.publica", "albergue1.publica", "albergue2.publica"};
         Scanner teclado = new Scanner(System.in);
         Utils u = new Utils();

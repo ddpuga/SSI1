@@ -11,11 +11,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Scanner;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  *
@@ -27,6 +29,8 @@ public class CrearCredencial {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException, IOException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException {
+        //REGISTRAMOS EL PROVIDER
+        Security.addProvider(new BouncyCastleProvider()); 
         
         args = new String[]{"paquete.txt","oficina.publica","peregrino.privada"};
         
