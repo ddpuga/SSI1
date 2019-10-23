@@ -44,7 +44,7 @@ public class SellarCredencial {
         Paquete p = PaqueteDAO.leerPaquete(args[0]);
         p = alb.sellarCredencial(publicaOficina, privadaAlbergue, p);
 
-        PaqueteDAO.escribirPaquete(p, args[0]);
+        PaqueteDAO.escribirPaquete(args[0],p);
 
     }
 }

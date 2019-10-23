@@ -52,7 +52,7 @@ public class CrearCredencial {
         PublicKey publicaOficina = u.leerPublica(args[1]);
         PrivateKey privadaPeregrino = u.leerPrivada(args[2]);
        Paquete p = per.crearCredencial(publicaOficina, privadaPeregrino);
-        PaqueteDAO.escribirPaquete(p, args[0]);
+        PaqueteDAO.escribirPaquete(args[0],p);
         
     }
     
