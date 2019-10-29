@@ -59,8 +59,8 @@ public class Peregrino {
         
         Paquete toret = new Paquete();
         
-        toret.anadirBloque("datos", datosCifrados);
-        toret.anadirBloque("claveCifrada", claveCifrada);
+        toret.anadirBloque("datosPeregrino", datosCifrados);
+        toret.anadirBloque("claveCifradaPeregrino", claveCifrada);
         toret.anadirBloque("resumenPeregrino", resumenDatos);       //comprobar llamadas--------------------------------
         
         return toret;
