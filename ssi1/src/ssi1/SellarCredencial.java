@@ -28,7 +28,11 @@ public class SellarCredencial {
         //REGISTRAMOS EL PROVIDER
         Security.addProvider(new BouncyCastleProvider()); 
         
+<<<<<<< HEAD
         args = new String[]{"paquete.txt", "oficina.publica", "albergue2.privada"};
+=======
+        args = new String[]{"paquete.txt", "oficina.publica", "albergue1.privada"}; //PARA EL ALBERGUE 1
+>>>>>>> 5f72d32d9152dd791699075fa2a0d9a42b9e80fd
         Scanner teclado = new Scanner(System.in);
         Utils u = new Utils();
 
