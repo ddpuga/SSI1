@@ -29,7 +29,7 @@ public class GenerarClaves {
             
             Security.addProvider(new BouncyCastleProvider()); 
             
-            
+            args = new String[]{"oficina"};
             //EN CADA EJECUCION SE CAMBIA EL ARGUMENTO PARA QUE GENERE NOMBRES DE ARCHIVOS DIFERENTES 
             //(OFICINA,PEREGRINO,ALBERGUE)
             
