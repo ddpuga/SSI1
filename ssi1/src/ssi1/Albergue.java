@@ -59,14 +59,14 @@ public class Albergue {
        
        StringBuilder identif = new StringBuilder();
        identif.append(nombre);
-       identif.append("_datosAlbergue");
+       identif.append("_datos");
        StringBuilder identif2 = new StringBuilder();
-       identif2.append(nombre);
-       identif2.append("_claveCifradaAlbergue");
+       identif.append(nombre);
+       identif.append("_claveCifrada");
        StringBuilder identif3 = new StringBuilder();
-       identif3.append(nombre);
-       identif3.append("_resumenAlbergue");
-        //System.out.println("Pre-AñadirBloque-Albergue");
+       identif.append(nombre);
+       identif.append("_resumen");
+        
         toret.anadirBloque(identif.toString(), datosCifrados);
         toret.anadirBloque(identif2.toString(), claveCifrada);
         toret.anadirBloque(identif3.toString(), resumenDatos);
