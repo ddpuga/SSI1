@@ -32,7 +32,7 @@ public class GenerarClaves {
             
             //EN CADA EJECUCION SE CAMBIA EL ARGUMENTO PARA QUE GENERE NOMBRES DE ARCHIVOS DIFERENTES 
             //(OFICINA,PEREGRINO,ALBERGUE)
-            
+
 		if (args.length != 1) {
 			mensajeAyuda();
 			System.exit(1);

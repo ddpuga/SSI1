@@ -64,11 +64,18 @@ public class DesempaquetarCredencial {
         DESKeySpec DESspec = new DESKeySpec(claveSecretaArray);
         //Obtenemos la clave secreta
         SecretKey claveSecreta = secretKeyFactoryDES.generateSecret(DESspec);  
-        
+        System.out.println("Clave secreta : --------");
+        System.out.println(new String(claveSecreta.getEncoded()));
+        System.out.println("--------");
         //Obtenemos los datos del peregrino aun encriptados
         byte[]datosPeregrinoEncriptados = p.getContenidoBloque("datosPeregrino");
+        System.out.println("DATOS CIFRADOS -------");
+        System.out.println(new String(datosPeregrinoEncriptados));
+        System.out.println("--------");
         //Desciframos los datos con la clave secreta DES
         byte[]datosDesencriptados = ofi.descifrarDatosSimetrico(claveSecreta, datosPeregrinoEncriptados);
+        System.out.println("DATOS DESENCRIPTADOS:     ");
+        System.out.println(new String(datosDesencriptados));
         //Resumimos los datos recibidos
         byte[]resumenGenerado = ofi.resumirDatos(datosDesencriptados);
         
@@ -76,9 +83,11 @@ public class DesempaquetarCredencial {
         byte[] resumenRecibido = ofi.descifrarDatosRSAPublica(publicaPeregrino, bloqueResumenEncriptado);
         
         //Comparamos los resumenes
-        if(ofi.compararResumenes(resumenGenerado, resumenRecibido)){
+        if(ofi.compararResumenes(resumenGenerado, resumenRecibido)){        
             System.out.println("RESUMENES COINCIDENTES, DATOS EN BUEN ESTADO");
         }else{
+            System.out.println("ResumenGenerado: \n" + new String(resumenGenerado));
+            System.out.println("ResumenRecibido: \n" + new String(resumenRecibido));
             System.out.println("DATOS COMPROMETIDOS :(");
         }
         

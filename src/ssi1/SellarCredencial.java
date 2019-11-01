@@ -28,7 +28,7 @@ public class SellarCredencial {
         //REGISTRAMOS EL PROVIDER
         Security.addProvider(new BouncyCastleProvider()); 
         
-        args = new String[]{"paquete.txt", "oficina.publica", "albergue2.privada"};
+        //args = new String[]{"paquete.txt", "oficina.publica", "albergue2.privada"};
 
         args = new String[]{"paquete.txt", "oficina.publica", "albergue1.privada"}; //PARA EL ALBERGUE 1
 
