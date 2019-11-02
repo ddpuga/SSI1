@@ -2,6 +2,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*Este codigo ha sido desarrollado por:
+    Daniel Duque Puga
+    Miguel Crecente Rodriguez
+    Rodrigo Curras Ferradas
+*/
 package ssi1;
 
 import java.io.IOException;
@@ -30,11 +35,13 @@ public class SellarCredencial {
         
         //args = new String[]{"paquete.txt", "oficina.publica", "albergue2.privada"};
 
-        args = new String[]{"paquete.txt", "oficina.publica", "albergue1.privada"}; //PARA EL ALBERGUE 1
+        //args = new String[]{"paquete.txt", "idAlbergue", "oficina.publica", "albergue1.privada"}; //PARA EL ALBERGUE 1
 
         Scanner teclado = new Scanner(System.in);
         Utils u = new Utils();
-
+        
+        String id = args[1];    //Capturamos el identificador del albergue
+        
         System.out.println("Albergue, introduce nombre: ");
         String nombre = teclado.nextLine();
         System.out.println("Introduce fecha de creacion");
@@ -44,10 +51,10 @@ public class SellarCredencial {
         System.out.println("Introduce incidencias: ");
         String incidencias = teclado.nextLine();
 
-        Albergue alb = new Albergue(nombre, fecha, lugar, incidencias);
+        Albergue alb = new Albergue(id, nombre, fecha, lugar, incidencias);
 
-        PublicKey publicaOficina = u.leerPublica(args[1]);
-        PrivateKey privadaAlbergue = u.leerPrivada(args[2]);
+        PublicKey publicaOficina = u.leerPublica(args[2]);
+        PrivateKey privadaAlbergue = u.leerPrivada(args[3]);
         Paquete p = PaqueteDAO.leerPaquete(args[0]);
         p = alb.sellarCredencial(publicaOficina, privadaAlbergue, p);
 

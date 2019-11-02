@@ -36,7 +36,8 @@ public class Paquete {
 	if (bloque != null) {
 		return bloque.getContenido();
 	} else {
-		return null;
+            System.out.println("Bloque no encontrado: " + nombreBloque);
+            return null;
 	}
     }
 

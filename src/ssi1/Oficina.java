@@ -40,10 +40,10 @@ public class Oficina {
 
         byte[] bufferPlano;
 
-        byte[] bytesLeidos = b;
-        bufferPlano = cifrador.update(bytesLeidos); // Pasa texto claro leido al cifrador
+        //byte[] bytesLeidos = b;
+        //bufferPlano = cifrador.update(b); // Pasa texto claro leido al cifrador
 
-        bufferPlano = cifrador.doFinal(); // Completar descifrado (procesa relleno, puede devolver texto)
+        bufferPlano = cifrador.doFinal(b); // Completar descifrado (procesa relleno, puede devolver texto)
 
         return bufferPlano;
     }

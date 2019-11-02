@@ -24,14 +24,14 @@ import javax.crypto.SecretKey;
  * @author danid
  */
 public class Albergue {
-
+    String id;
     String nombre;
     String fecha;
     String lugar;
     String incidencias;
 
-    public Albergue(String nombre, String fecha, String lugar, String incidencias) {
-
+    public Albergue(String id, String nombre, String fecha, String lugar, String incidencias) {
+        this.id = id;
         this.nombre = nombre;
         this.incidencias = incidencias;
         this.fecha = fecha;
@@ -58,13 +58,13 @@ public class Albergue {
        Paquete toret = p;
        
        StringBuilder identif = new StringBuilder();
-       identif.append(nombre);
+       identif.append(id);
        identif.append("_datosAlbergue");
        StringBuilder identif2 = new StringBuilder();
-       identif2.append(nombre);
+       identif2.append(id);
        identif2.append("_claveCifradaAlbergue");
        StringBuilder identif3 = new StringBuilder();
-       identif3.append(nombre);
+       identif3.append(id);
        identif3.append("_resumenAlbergue");
         //System.out.println("Pre-AñadirBloque-Albergue");
         toret.anadirBloque(identif.toString(), datosCifrados);

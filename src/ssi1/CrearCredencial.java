@@ -3,6 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*Este codigo ha sido desarrollado por:
+    Daniel Duque Puga
+    Miguel Crecente Rodriguez
+    Rodrigo Curras Ferradas
+*/
 package ssi1;
 
 import java.io.IOException;
