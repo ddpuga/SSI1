@@ -43,10 +43,9 @@ public class DesempaquetarCredencial {
         //REGISTRAMOS EL PROVIDER
         Security.addProvider(new BouncyCastleProvider());
 
-        /*
-            EJECUTAR 2 veces SellarCredencial, una para albergue1 y otra para albergue2
-         */
-        args = new String[]{"paquete.txt", "2", "albergue1", "albergue1.publica", "albergue2", "albergue2.publica", "oficina.publica", "oficina.privada", "peregrino.publica"};
+        
+        //Descomentar en caso de no querer introducir argumentos
+        //args = new String[]{"paquete.txt", "2", "albergue1", "albergue1.publica", "albergue2", "albergue2.publica", "oficina.publica", "oficina.privada", "peregrino.publica"};
 
         if (args.length < 4) {
             System.out.println("Al menos 4 parametros");
@@ -67,32 +66,18 @@ public class DesempaquetarCredencial {
         //List<PublicKey> listaPublicas = new ArrayList<>();
         Map<String, PublicKey> mapaPublicas = new HashMap<>();
         for (int i = 2; i < (2 + (numAlbergues * 2)); i += 2) { //Empieza en la posicion 2 y revisa todos los pares id-clave
-            //System.out.println("Albergue: " + args[i] + " Clave: " + args[i + 1]);
             String idAlbAux = args[i];
             PublicKey clavePublica = u.leerPublica(args[i + 1]);
-            //System.out.println("ClavePublica: " + clavePublica.getEncoded());
+
             mapaPublicas.put(idAlbAux, clavePublica);
-            //System.out.println(mapaPublicas.get(idAlbAux).getEncoded());
         }
 
         int indexClavesArgs = 2 + (numAlbergues * 2);
-        System.out.println("IndexClavesArgs: " + indexClavesArgs);
-        System.out.println("Valor: " + args[indexClavesArgs]);
 
-        /*
-        PublicKey publicaOficina = u.leerPublica("oficina.publica");
-        PrivateKey privadaOficina = u.leerPrivada("oficina.privada");
-        PublicKey publicaPeregrino = u.leerPublica("peregrino.publica");
-         */
         PublicKey publicaOficina = u.leerPublica(args[indexClavesArgs]);
         PrivateKey privadaOficina = u.leerPrivada(args[indexClavesArgs + 1]);
         PublicKey publicaPeregrino = u.leerPublica(args[indexClavesArgs + 2]);
 
-        //FALTA MODIFICAR CODIGO FOR DE LOS ALBERGUES Y PROBAR
-        /*
-        PublicKey publicaAlbergue1 = u.leerPublica(args[2]);
-        PublicKey publicaAlbergue2 = u.leerPublica(args[3]);
-         */
         byte[] bloqueKS = p.getContenidoBloque("claveCifradaPeregrino");
         SecretKeyFactory secretKeyFactoryDES = SecretKeyFactory.getInstance("DES");
         byte[] claveSecretaArray = ofi.descifrarDatosRSAPrivada(privadaOficina, bloqueKS);
@@ -104,10 +89,8 @@ public class DesempaquetarCredencial {
         //Obtenemos los datos del peregrino aun encriptados
         byte[] datosPeregrinoEncriptados = p.getContenidoBloque("datosPeregrino");
 
-
         //Desciframos los datos con la clave secreta DES
         byte[] datosDesencriptados = ofi.descifrarDatosSimetrico(claveSecreta, datosPeregrinoEncriptados);
-
 
         //Resumimos los datos recibidos
         byte[] resumenGenerado = ofi.resumirDatos(datosDesencriptados);
@@ -129,17 +112,13 @@ public class DesempaquetarCredencial {
         Iterator<String> itSet = setIds.iterator();
         while (itSet.hasNext()) {
             String id = itSet.next();
-            System.out.println("Id: " + id);
             PublicKey clavePublicaAlbergue = mapaPublicas.get(id);
-            System.out.println("Clave Pubica de Albergue: " + clavePublicaAlbergue.getEncoded());
 
             //Datos encriptados
             byte[] datosAlbergueEncriptados = p.getContenidoBloque(id + "_datosAlbergue");
             //Clave secreta encriptada
             byte[] claveCifrada = p.getContenidoBloque(id + "_claveCifradaAlbergue");
-            if (claveCifrada == null) {
-                System.out.println("NULO");
-            }
+
             //Resumen recibido encriptado
             byte[] resumenCifrado = p.getContenidoBloque(id + "_resumenAlbergue");
 
@@ -155,16 +134,16 @@ public class DesempaquetarCredencial {
             byte[] resumenGeneradoAlb = ofi.resumirDatos(datosAlbergue);
             //Resumen recibido ya descifrado
             PublicKey publicaAlbergue = mapaPublicas.get(id);
-            
-            System.out.println("Para el albergue " + id);
-            System.out.println(" obtenemos la clave: " + new String(publicaAlbergue.getEncoded()));
 
             byte[] resumenRecibidoAlb = ofi.descifrarDatosRSAPublica(publicaAlbergue, resumenCifrado);
+            System.out.println("Resultado descifrado del albergue: " + id);
             //Comparamos resumenes
             if (ofi.compararResumenes(resumenGeneradoAlb, resumenRecibidoAlb)) {
                 System.out.println("RESUMENES DE ALBERGUE COINCIDENTES, DATOS DE ALBERGUE EN BUEN ESTADO");
                 System.out.println(new String(datosAlbergue));
             } else {
+                System.out.println("ResumenGenerado: \n" + new String(resumenGeneradoAlb));
+                System.out.println("ResumenRecibido: \n" + new String(resumenRecibidoAlb));
                 System.out.println("DATOS DE ALBERGUE COMPROMETIDOS :(");
             }
             System.out.println("------------------------------------------");

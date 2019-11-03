@@ -24,6 +24,7 @@ import javax.crypto.SecretKey;
  * @author danid
  */
 public class Albergue {
+
     String id;
     String nombre;
     String fecha;
@@ -36,7 +37,7 @@ public class Albergue {
         this.incidencias = incidencias;
         this.fecha = fecha;
         this.lugar = lugar;
-        
+
     }
 
     private byte[] crearDatosAlbergue() {
@@ -44,38 +45,36 @@ public class Albergue {
         return datos.getBytes();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public Paquete sellarCredencial(PublicKey publicaOficina, PrivateKey privadaAlbergue, Paquete p) throws NoSuchAlgorithmException, IOException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
-        
-        byte[] datosAlbergue = crearDatosAlbergue();   
+
+    public Paquete sellarCredencial(PublicKey publicaOficina, PrivateKey privadaAlbergue, Paquete p) throws NoSuchAlgorithmException, IOException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+
+        byte[] datosAlbergue = crearDatosAlbergue();
         SecretKey claveSecreta = crearClaveSecreta();
-        byte [] resumenDatos = resumirDatos(datosAlbergue);
-        resumenDatos=cifrarAsimetricoKR (resumenDatos,privadaAlbergue);
-        
+        byte[] resumenDatos = resumirDatos(datosAlbergue);
+        resumenDatos = cifrarAsimetricoKR(resumenDatos, privadaAlbergue);
+
         byte[] datosCifrados = cifrarDatos(datosAlbergue, claveSecreta);
         byte[] claveCifrada = cifrarClaveSecreta(claveSecreta, publicaOficina);
-        
-       Paquete toret = p;
-       
-       StringBuilder identif = new StringBuilder();
-       identif.append(id);
-       identif.append("_datosAlbergue");
-       StringBuilder identif2 = new StringBuilder();
-       identif2.append(id);
-       identif2.append("_claveCifradaAlbergue");
-       StringBuilder identif3 = new StringBuilder();
-       identif3.append(id);
-       identif3.append("_resumenAlbergue");
-        //System.out.println("Pre-AñadirBloque-Albergue");
+
+        Paquete toret = p;
+
+        StringBuilder identif = new StringBuilder();
+        identif.append(id);
+        identif.append("_datosAlbergue");
+        StringBuilder identif2 = new StringBuilder();
+        identif2.append(id);
+        identif2.append("_claveCifradaAlbergue");
+        StringBuilder identif3 = new StringBuilder();
+        identif3.append(id);
+        identif3.append("_resumenAlbergue");
+
         toret.anadirBloque(identif.toString(), datosCifrados);
         toret.anadirBloque(identif2.toString(), claveCifrada);
         toret.anadirBloque(identif3.toString(), resumenDatos);
-        
+
         return toret;
-        
-        
+
     }
-    
 
     public SecretKey crearClaveSecreta() throws NoSuchAlgorithmException {
 
@@ -106,7 +105,7 @@ public class Albergue {
         cifrador.init(Cipher.ENCRYPT_MODE, publicaOficina);
         System.out.println("3a. Cifrar con clave publica");
         byte[] bufferCifrado = cifrador.doFinal(claveArray);
-        System.out.println("TEXTO CIFRADO");
+        System.out.println("CLAVE CIFRADA");
         return bufferCifrado;
 
     }
@@ -120,16 +119,15 @@ public class Albergue {
         return resumen;
 
     }
-    
-    
-    private byte[] cifrarAsimetricoKR(byte[] datos, PrivateKey clave) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
-       
-       Cipher cifrador = Cipher.getInstance("RSA", "BC");    
+
+    private byte[] cifrarAsimetricoKR(byte[] datos, PrivateKey clave) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+
+        Cipher cifrador = Cipher.getInstance("RSA", "BC");
         System.out.println("4a. Cifrar con clave privada");
         cifrador.init(Cipher.ENCRYPT_MODE, clave);
-      byte [] bufferCifrado = cifrador.doFinal(datos);
-      System.out.println("TEXTO CIFRADO");
-       return bufferCifrado;
-   }
+        byte[] bufferCifrado = cifrador.doFinal(datos);
+        System.out.println("TEXTO CIFRADO");
+        return bufferCifrado;
+    }
 
 }

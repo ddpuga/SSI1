@@ -2,11 +2,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*Este codigo ha sido desarrollado por:
+ /*Este codigo ha sido desarrollado por:
     Daniel Duque Puga
     Miguel Crecente Rodriguez
     Rodrigo Curras Ferradas
-*/
+ */
 package ssi1;
 
 import java.io.IOException;
@@ -31,17 +31,20 @@ public class SellarCredencial {
 
     public static void main(String[] args) throws InvalidKeySpecException, NoSuchAlgorithmException, NoSuchProviderException, IOException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         //REGISTRAMOS EL PROVIDER
-        Security.addProvider(new BouncyCastleProvider()); 
+        Security.addProvider(new BouncyCastleProvider());
+        /*
+            EJECUTAR 2 veces SellarCredencial, una para albergue1 y otra para albergue2
+         */
         
-        //args = new String[]{"paquete.txt", "oficina.publica", "albergue2.privada"};
-
-        //args = new String[]{"paquete.txt", "idAlbergue", "oficina.publica", "albergue1.privada"}; //PARA EL ALBERGUE 1
-
+        //Descomentar en caso de no querer introducir argumentos
+        //args = new String[]{"paquete.txt", "albergue1", "oficina.publica", "albergue1.privada"}; //PARA EL ALBERGUE 1
+        //Descomentar en caso de no querer introducir argumentos
+        //args = new String[]{"paquete.txt", "albergue2", "oficina.publica", "albergue2.privada"}; //PARA EL ALBERGUE 2
         Scanner teclado = new Scanner(System.in);
         Utils u = new Utils();
-        
+
         String id = args[1];    //Capturamos el identificador del albergue
-        
+
         System.out.println("Albergue, introduce nombre: ");
         String nombre = teclado.nextLine();
         System.out.println("Introduce fecha de creacion");
@@ -58,7 +61,7 @@ public class SellarCredencial {
         Paquete p = PaqueteDAO.leerPaquete(args[0]);
         p = alb.sellarCredencial(publicaOficina, privadaAlbergue, p);
 
-        PaqueteDAO.escribirPaquete(args[0],p);
+        PaqueteDAO.escribirPaquete(args[0], p);
 
     }
 }

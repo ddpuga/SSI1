@@ -87,28 +87,27 @@ public class Peregrino {
     }
 
     private byte[] cifrarDatos(byte[] datos, SecretKey clave) throws NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException {
-        System.out.println("CIFRAR DATOS");
+
         Cipher cifrador = Cipher.getInstance("DES/ECB/PKCS5Padding");
 
         cifrador.init(Cipher.ENCRYPT_MODE, clave);
         System.out.println(new String(datos));
         System.out.println("4a. Cifrar con clave secreta");
         byte[] bufferCifrado = cifrador.doFinal(datos);
-        System.out.println("TEXTO CIFRADO");
+        System.out.println("DATOS CIFRADOS");
         System.out.write(bufferCifrado, 0, bufferCifrado.length);
         return bufferCifrado;
 
     }
 
     private byte[] cifrarClaveSecreta(SecretKey clavesecreta, PublicKey publicaOficina) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        System.out.println("CIFRAR CLAVE SECRETA");
         Cipher cifrador = Cipher.getInstance("RSA", "BC");
         byte[] claveArray = clavesecreta.getEncoded();
         cifrador.init(Cipher.ENCRYPT_MODE, publicaOficina);
         System.out.println("3a. Cifrar con clave publica");
         byte[] bufferCifrado = cifrador.doFinal(claveArray);
         System.out.println(new String(bufferCifrado));
-        System.out.println("TEXTO CIFRADO");
+        System.out.println("CLAVE CIFRADA");
         return bufferCifrado;
 
     }
@@ -120,13 +119,11 @@ public class Peregrino {
         messageDigest.update(datos); // Pasa texto de entrada a la funciÃ³n resumen
 
         byte[] resumen = messageDigest.digest(); // Completar el resumen
-        System.out.println("-----------Datos resumidos: " + new String(resumen));
         return resumen;
 
     }
 
     private byte[] cifrarAsimetricoKR(byte[] datos, PrivateKey clave) throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        System.out.println("CIFRAR ASIMETRICO KR");
         Cipher cifrador = Cipher.getInstance("RSA", "BC");
         System.out.println("4a. Cifrar con clave privada");
         System.out.println(new String(datos));

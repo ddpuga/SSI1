@@ -39,10 +39,6 @@ public class Oficina {
         cifrador.init(Cipher.DECRYPT_MODE, clave);
 
         byte[] bufferPlano;
-
-        //byte[] bytesLeidos = b;
-        //bufferPlano = cifrador.update(b); // Pasa texto claro leido al cifrador
-
         bufferPlano = cifrador.doFinal(b); // Completar descifrado (procesa relleno, puede devolver texto)
 
         return bufferPlano;

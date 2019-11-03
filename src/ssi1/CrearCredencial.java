@@ -37,11 +37,12 @@ public class CrearCredencial {
         //REGISTRAMOS EL PROVIDER
         Security.addProvider(new BouncyCastleProvider()); 
         
-        args = new String[]{"paquete.txt","oficina.publica","peregrino.privada"};
+        //Descomentar en caso de no querer introducir argumentos
+        //args = new String[]{"paquete.txt","oficina.publica","peregrino.privada"};
         
         Scanner teclado = new Scanner(System.in);
         Utils u = new Utils();
-        /*
+        
         System.out.println("Peregrino, introduce nombre: ");
         String nombre = teclado.nextLine();
         System.out.println("Introduce dni: ");
@@ -57,8 +58,8 @@ public class CrearCredencial {
         
       
         Peregrino per = new Peregrino(nombre,dni,motivo,domicilio,fecha,lugar);
-        */
-        Peregrino per = new Peregrino("prueba","43522312Z","Turismo","Cangas","10/2/2018","Lugo");
+        
+
         PublicKey publicaOficina = u.leerPublica(args[1]);
         PrivateKey privadaPeregrino = u.leerPrivada(args[2]);
        Paquete p = per.crearCredencial(publicaOficina, privadaPeregrino);
